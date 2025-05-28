@@ -8,17 +8,17 @@ pygame.init()
 WIDTH, HEIGHT = 1366, 768
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("BookBeat")
-
 # Load images
-background = pygame.image.load("images/background1.png")
 background2 = pygame.image.load("images/background2.png")
 vector_image = pygame.image.load("images/vector2.png")
 username_icon = pygame.image.load("images/username_icon.png")
 password_icon = pygame.image.load("images/password_icon.png")
+bookbeat_icon = pygame.image.load("images/bookbeat_icon.png")
 mail_icon = pygame.image.load("images/mail.png")
-btn_img = pygame.image.load("images/btn1.png")
 btn2_img = pygame.image.load("images/btn2.png")
 btnR_img = pygame.image.load("images/backgroundReg.png")
+pygame.display.set_icon(bookbeat_icon)
+
 
 # Fonts
 FONT = pygame.font.SysFont("Zapf Renaissance Book", 20, bold=True)
