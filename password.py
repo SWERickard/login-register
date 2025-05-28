@@ -31,9 +31,9 @@ FONTARIAL = pygame.font.SysFont("Arial", 15)
 WHITE = (255, 255, 255)
 GRAY = (107, 106, 105)
 BLUE = (48, 71, 255)
-YELLOW = (255, 255, 255)
 BLACK = (0, 0, 0)
 PURPLE = (205, 150, 255)
+LIGHTGRAY = (242, 242, 242)
 
 # User data
 users_file = "users.json"
@@ -54,7 +54,7 @@ is_register_screen = False
 # Rectangles (login screen)
 username_rect = pygame.Rect(550, 330, 300, 35)
 password_rect = pygame.Rect(550, 410, 300, 35)
-login_button_rect = pygame.Rect(550, 470, 250, 45)
+login_button_rect = pygame.Rect(550, 470, 300, 45)
 top_register_button_rect = pygame.Rect(WIDTH - 190, 10, 120, 40)
 
 # Rectangles (register screen)
@@ -172,7 +172,9 @@ while running:
         pygame.draw.rect(screen, GRAY, username_rect_reg, 2)
         pygame.draw.rect(screen, GRAY, password_rect_reg, 2)
         pygame.draw.rect(screen, GRAY, email_rect, 2)
-        pygame.draw.rect(screen, PURPLE, skapa_konto_rect)
+
+        skapa_konto_color = PURPLE if username_input and password_input and email_input else LIGHTGRAY
+        pygame.draw.rect(screen, skapa_konto_color, skapa_konto_rect)
 
         draw_text("Användarnamn", (username_rect_reg.x, username_rect_reg.y - 30), FONTSMALL, BLACK)
         draw_text("Lösenord", (password_rect_reg.x, password_rect_reg.y - 30), FONTSMALL, BLACK)
@@ -228,8 +230,11 @@ while running:
             cursor_height = FONTARIAL.get_height()
             pygame.draw.line(screen, BLACK, (cursor_x, cursor_y), (cursor_x, cursor_y + cursor_height), 2)
 
-        screen.blit(btn2_img, login_button_rect.topleft)
-        draw_text("Logga in", (login_button_rect.x + 100, login_button_rect.y + 14), FONTSMALL, BLACK)
+        login_button_color = PURPLE if username_input and password_input else LIGHTGRAY
+        pygame.draw.rect(screen, login_button_color, login_button_rect)
+        draw_text("Logga in", (login_button_rect.x + 115, login_button_rect.y + 14), FONTSMALL, BLACK)
+
+        
 
         feedback_label = FONTSMALL.render(feedback, True, GRAY)
         screen.blit(feedback_label, feedback_label.get_rect(center=(login_button_rect.centerx, 640)))
