@@ -71,11 +71,11 @@ def check_login():
     global feedback
     if username_input in users_dict:
         if users_dict[username_input] == password_input:
-            feedback = f"Welcome back, {username_input}!"
+            feedback = f"Välkommen Tillbaka, {username_input}!"
         else:
-            feedback = "Incorrect password."
+            feedback = "Fel lösenord eller användarnamn."
     else:
-        feedback = "User does not exist."
+        feedback = "Användaren finns inte."
 
 clock = pygame.time.Clock()
 cursor_visible = True
@@ -119,7 +119,6 @@ while running:
                 elif email_rect.collidepoint(event.pos):
                     active_field = "email"
                 elif skapa_konto_rect.collidepoint(event.pos):
-                    # Register user
                     if username_input and password_input and email_input:
                         if username_input in users_dict:
                             feedback = "Användarnamnet är redan taget."
@@ -127,13 +126,19 @@ while running:
                             users_dict[username_input] = password_input
                             with open(users_file, "w") as f:
                                 json.dump(users_dict, f)
-                            feedback = f"User {username_input} registered successfully."
+                            feedback = f"User {username_input} Välkommen!."
                             username_input = ""
                             password_input = ""
                             email_input = ""
                             is_register_screen = False
                     else:
                         feedback = "Alla fält måste fyllas i."
+                elif bookbeat_text_rect.collidepoint(event.pos):  # Back button
+                    is_register_screen = False
+                    username_input = ""
+                    password_input = ""
+                    email_input = ""
+                    feedback = ""
                 else:
                     active_field = None
 
@@ -157,7 +162,9 @@ while running:
     # Draw interface
     if is_register_screen:
         screen.blit(btnR_img, (0, 0))
-        draw_text("BookBeat", (80, 10), BIG_FONT, BLACK)
+        bookbeat_text = BIG_FONT.render("BookBeat", True, BLACK)
+        bookbeat_text_rect = bookbeat_text.get_rect(topleft=(80, 10))
+        screen.blit(bookbeat_text, bookbeat_text_rect)
 
         headline_label = BIG_FONT.render("Kom igång med ett konto", True, BLACK)
         screen.blit(headline_label, headline_label.get_rect(center=(WIDTH // 2, 200)))
@@ -180,7 +187,6 @@ while running:
         draw_text("*" * len(password_input) if password_input else "Skriv lösenord", (password_rect_reg.x + 10, password_rect_reg.y + 10), FONTARIAL, BLACK if password_input else (180, 180, 180))
         draw_text(email_input or "Skriv mailadress", (email_rect.x + 10, email_rect.y + 10), FONTARIAL, BLACK if email_input else (180, 180, 180))
 
-        # Cursor rendering
         if active_field in ["username", "password", "email"] and cursor_visible:
             input_map = {
                 "username": (username_input, username_rect_reg),
